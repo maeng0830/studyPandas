@@ -1,0 +1,6 @@
+numpy==2.3.3
+pandas==2.3.3
+matplotlib==3.10.6
+seaborn==0.13.2
+finance-datareader==0.9.96
+ipython==9.6.0

@@ -1,0 +1,91 @@
+# ---- Python bytecode / cache ----
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ---- Builds / packaging ----
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+*.egg
+.installed.cfg
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+ENV/
+.python-version  # pyenv
+
+# ---- Logs / runtime ----
+*.log
+*.out
+*.pid
+
+# ---- Test / coverage ----
+.coverage
+.coverage.*
+.cache/
+nosetests.xml
+coverage.xml
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+
+# ---- Type checking / linters ----
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+ruff_cache/
+
+# ---- Notebooks / Jupyter ----
+.ipynb_checkpoints/
+.profile_default/
+.ipython/
+
+# ---- Django / Flask / FastAPI 등 프레임워크 산출물 ----
+*.mo
+*.pot
+staticfiles/
+media/
+
+# ---- Env / secrets ----
+.env
+.env.*
+*.env
+*.key
+*.pem
+
+# ---- IDE / Editor ----
+.idea/
+.vscode/
+*.iml
+
+# ---- OS-specific ----
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ---- C/C++/Fortran extensions ----
+*.so
+*.pyd
+*.dll
+*.dylib
+
+# ---- Docs ----
+_site/
+.gitbook/
+docs/_build/
+
+# ---- Docker ----
+docker-compose.override.yml
+.docker/
+.tmp/
