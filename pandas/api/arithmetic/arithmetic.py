@@ -3,7 +3,7 @@ import pandas as pd
 import FinanceDataReader as fdr
 
 price_df = fdr.DataReader("005930", '2013-01-01', '2018-03-21')
-df = pd.read_csv('../../my_data/naver_finance/2015_12.csv')
+df = pd.read_csv('../../../my_data/naver_finance/2015_12.csv')
 
 # axis
 ## numpy-axis
