@@ -128,3 +128,57 @@ print(
 # 8          0.144230  0.545007  0.46555
 # 9          0.047995  0.477527  0.33169
 # 10         0.195620  0.478981  0.28654
+
+###################################################################################
+# etc
+## as_index=False는 group column들이 index가 아니라 하나의 column이 됨(aggregation 후, reset_index())
+a = g_df.groupby(['PER_Score']).agg({'rtn': ['mean', 'std'], }).head(2)
+b = g_df.groupby(['PER_Score'], as_index=False).agg({'rtn': ['mean', 'std']}).head(2)
+print(a)
+#                 rtn
+#                mean       std
+# PER_Score
+# 1         -0.061915  0.327539
+# 2         -0.083212  0.780563
+print(b)
+#   PER_Score       rtn
+#                  mean       std
+# 0         1 -0.061915  0.327539
+# 1         2 -0.083212  0.780563
+
+## Squash the Multi-index columns
+g_df1 = g_df.groupby(['PBR_Score', 'PER_Score'], observed=True).agg(
+    {'rtn': ['mean', 'std', 'min', 'max'], 'ROE(%)': ['mean', 'size', 'nunique', 'idxmax'], })
+print(g_df1)
+#                           rtn                      ... ROE(%)
+#                          mean       std       min  ...   size nunique    idxmax
+# PBR_Score PER_Score                                ...
+# 1         1         -0.099839  0.071890 -0.195731  ...      5       5  한국수출포장공업
+#           2         -0.093158  0.266421 -0.481784  ...     11      11      삼부토건
+#           3          0.117311  0.359099 -0.555509  ...     11      11    한국전력공사
+#           4          0.105904  0.294823 -0.272727  ...     11      11      한국공항
+#           5         -0.039217  0.119516 -0.206000  ...      7       7    성창기업지주
+# ...                       ...       ...       ...  ...    ...     ...       ...
+# 10        6          0.367589       NaN  0.367589  ...      1       1     한국화장품
+#           7         -0.096379  0.047054 -0.129652  ...      2       2   제이준코스메틱
+#           8          0.211910  0.493771 -0.638111  ...     15      15      대양금속
+#           9         -0.139295  0.243736 -0.711993  ...     11      11     NAVER
+#           10         0.302556  0.565501 -0.570153  ...     14      14      셀트리온
+
+level0 = g_df1.columns.get_level_values(0)
+print(level0)  # Index(['rtn', 'rtn', 'rtn', 'rtn', 'ROE(%)', 'ROE(%)', 'ROE(%)', 'ROE(%)'], dtype='object')
+level1 = g_df1.columns.get_level_values(1)
+print(level1)  # Index(['mean', 'std', 'min', 'max', 'mean', 'size', 'nunique', 'idxmax'], dtype='object')
+
+g_df1.columns = level0 + '_' + level1
+print(g_df1.head(2))
+#                      rtn_mean   rtn_std  ...  ROE(%)_nunique  ROE(%)_idxmax
+# PBR_Score PER_Score                      ...
+# 1         1         -0.099839  0.071890  ...               5       한국수출포장공업
+#           2         -0.093158  0.266421  ...              11           삼부토건
+
+g_df1 = g_df1.reset_index()
+print(g_df1.head(2))
+#   PBR_Score PER_Score  rtn_mean  ...  ROE(%)_size  ROE(%)_nunique  ROE(%)_idxmax
+# 0         1         1 -0.099839  ...            5               5       한국수출포장공업
+# 1         1         2 -0.093158  ...           11              11           삼부토건
